@@ -38,7 +38,7 @@ public class Keybind {
       binds.get(clickTypes).add(consumer);
    }
 
-   static public void initialize(JavaPlugin plugin, int keybindsLength, boolean cancelEventWhileKeybinding) {
+   static public void load(JavaPlugin plugin, int keybindsLength, boolean cancelEventWhileKeybinding) {
       Bukkit.getPluginManager().registerEvents(new Event(), plugin);
       Keybind.plugin = plugin;
       CANCEL_EVENT_WHILE_KEYBINDING = cancelEventWhileKeybinding;
