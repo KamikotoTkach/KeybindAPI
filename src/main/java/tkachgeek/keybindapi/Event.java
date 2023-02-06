@@ -20,7 +20,7 @@ public class Event implements Listener {
   
   void addClick(Player player, ClickType clickType) {
     if (clickType.disabled) return;
-    if (!Keybind.testPlayer(player)) return;
+    if (!KeybindAPI.testPlayer(player)) return;
     if (time.containsKey(player)) {
       if (System.currentTimeMillis() - time.get(player) > 1000) {
         clicks.get(player).clear();
@@ -35,9 +35,9 @@ public class Event implements Listener {
     time.put(player, System.currentTimeMillis());
     clicks.get(player).add(clickType);
     player.playSound(player.getLocation(), "ui.button.click", 0.5f, 1);
-    Keybind.draw(player, clicks.get(player));
-    if (clicks.get(player).size() >= Keybind.KEYBIND_LENGTH) {
-      Keybind.tryExecute(new ArrayList<>(clicks.get(player)), player);
+    KeybindAPI.draw(player, clicks.get(player));
+    if (clicks.get(player).size() >= KeybindAPI.KEYBIND_LENGTH) {
+      KeybindAPI.tryExecute(new ArrayList<>(clicks.get(player)), player);
       clicks.get(player).clear();
     }
   }
@@ -49,7 +49,7 @@ public class Event implements Listener {
   void click(PlayerInteractEvent event) {
     if (event.getHand() == EquipmentSlot.OFF_HAND) return;
     if (event.getMaterial().isInteractable()) return;
-    if (Keybind.CANCEL_EVENT_WHILE_KEYBINDING) event.setCancelled(true);
+    if (KeybindAPI.CANCEL_EVENT_WHILE_KEYBINDING) event.setCancelled(true);
     addClick(event.getPlayer(), event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK ? ClickType.MOUSE_LEFT : ClickType.MOUSE_RIGHT);
   }
   

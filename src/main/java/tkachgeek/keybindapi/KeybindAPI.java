@@ -15,14 +15,14 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
-public class Keybind {
+public class KeybindAPI {
    static JavaPlugin plugin;
    static int KEYBIND_LENGTH = 3;
    static boolean CANCEL_EVENT_WHILE_KEYBINDING = false;
    static HashMap<List<ClickType>, List<KeybindConsumer>> binds = new HashMap<>();
    static Predicate<Player> checkPlayer = (x) -> true;
 
-   public Keybind(KeybindConsumer consumer, ClickType... clicks) {
+   public KeybindAPI(KeybindConsumer consumer, ClickType... clicks) {
       if (clicks.length != KEYBIND_LENGTH) {
          Logger.getGlobal().warning("Невозможно зарегистрировать сочетание клавиш, так как длина не соответствует необходимой");
          return;
@@ -40,7 +40,7 @@ public class Keybind {
 
    static public void load(JavaPlugin plugin, int keybindsLength, boolean cancelEventWhileKeybinding) {
       Bukkit.getPluginManager().registerEvents(new Event(), plugin);
-      Keybind.plugin = plugin;
+      KeybindAPI.plugin = plugin;
       CANCEL_EVENT_WHILE_KEYBINDING = cancelEventWhileKeybinding;
       KEYBIND_LENGTH = keybindsLength;
    }
