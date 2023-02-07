@@ -1,6 +1,7 @@
 package tkachgeek.keybindapi;
 
 import com.destroystokyo.paper.event.player.PlayerJumpEvent;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -34,7 +35,7 @@ public class Event implements Listener {
     }
     time.put(player, System.currentTimeMillis());
     clicks.get(player).add(clickType);
-    player.playSound(player.getLocation(), "ui.button.click", 0.5f, 1);
+    player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1);
     KeybindAPI.draw(player, clicks.get(player));
     if (clicks.get(player).size() >= KeybindAPI.KEYBIND_LENGTH) {
       KeybindAPI.tryExecute(new ArrayList<>(clicks.get(player)), player);
@@ -43,7 +44,6 @@ public class Event implements Listener {
   }
   
   @EventHandler(
-     ignoreCancelled = true,
      priority = EventPriority.MONITOR
   )
   void click(PlayerInteractEvent event) {
