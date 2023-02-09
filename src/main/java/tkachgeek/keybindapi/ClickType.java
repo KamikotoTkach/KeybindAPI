@@ -5,6 +5,10 @@ public enum ClickType {
   MOUSE_RIGHT("R"),
   SHIFT_UP("N", true, true),
   SHIFT_DOWN("S", true),
+  GO_FORWARD("MF", false),
+  GO_BACKWARD("MW", false),
+  GO_LEFT("ML", false),
+  GO_RIGHT("MR", false),
   JUMP("J", true);
   public String letter;
   public boolean disableFirst = false;
@@ -14,9 +18,9 @@ public enum ClickType {
     this.letter = letter;
   }
   
-  ClickType(String letter, boolean disableFirst) {
+  ClickType(String letter, boolean blockStartWith) {
     this(letter);
-    this.disableFirst = disableFirst;
+    this.disableFirst = blockStartWith;
   }
   
   ClickType(String letter, boolean disableFirst, boolean disabled) {
@@ -24,11 +28,14 @@ public enum ClickType {
     this.disabled = disabled;
   }
   
-  void disable() {
+  public void disable() {
     disabled = true;
   }
+  public void enable() {
+    disabled = false;
+  }
   
-  void setLetter(String letter) {
+  public void setLetter(String letter) {
     this.letter = letter;
   }
 }

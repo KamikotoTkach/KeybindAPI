@@ -3,6 +3,7 @@ package tkachgeek.keybindapi;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import tkachgeek.tkachutils.messages.Message;
@@ -21,6 +22,42 @@ public class KeybindAPI {
    static boolean CANCEL_EVENT_WHILE_KEYBINDING = false;
    static HashMap<List<ClickType>, List<KeybindConsumer>> binds = new HashMap<>();
    static Predicate<Player> checkPlayer = (x) -> true;
+   static HashMap<Player, List<ClickType>> clicks = new HashMap<>();
+   static HashMap<Player, Long> time = new HashMap<>();
+   
+   public static void addClick(Player player, ClickType clickType) {
+      if (clickType.disabled) return;
+      if (!KeybindAPI.testPlayer(player)) return;
+      
+      if (time.containsKey(player)) {
+         long timeDiff = System.currentTimeMillis() - time.get(player);
+         if (timeDiff > 1000) {
+            clicks.get(player).clear();
+         } else if(timeDiff<200) {
+            return;
+         }
+      }
+      
+      if (!clicks.containsKey(player)) {
+         clicks.put(player, new ArrayList<>());
+      }
+      
+      if (clicks.get(player).size() == 0) {
+         if (clickType.disableFirst) return;
+      }
+      
+      time.put(player, System.currentTimeMillis());
+      clicks.get(player).add(clickType);
+      
+      player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1);
+      
+      KeybindAPI.draw(player, clicks.get(player));
+      
+      if (clicks.get(player).size() >= KeybindAPI.KEYBIND_LENGTH) {
+         KeybindAPI.tryExecute(new ArrayList<>(clicks.get(player)), player);
+         clicks.get(player).clear();
+      }
+   }
 
    public KeybindAPI(KeybindConsumer consumer, ClickType... clicks) {
       if (clicks.length != KEYBIND_LENGTH) {
