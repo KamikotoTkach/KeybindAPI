@@ -31,6 +31,7 @@ public enum ClickType {
   public void disable() {
     disabled = true;
   }
+  
   public void enable() {
     disabled = false;
   }

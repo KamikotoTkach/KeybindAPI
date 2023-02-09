@@ -7,7 +7,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import tkachgeek.tkachutils.numbers.NumbersUtils;
 import tkachgeek.tkachutils.scheduler.Scheduler;
 
 import java.util.HashMap;
@@ -71,13 +70,13 @@ public class MovementListener {
     
     Vector move = dif.toVector().normalize();
     newLocation.setDirection(move);
-    newLocation.setYaw(newLocation.getYaw() - angle+90);
+    newLocation.setYaw(newLocation.getYaw() - angle + 90);
     
     Vector dir = newLocation.getDirection();
     double xDif = dir.getX();
     double zDif = dir.getZ();
     
-    if (dif.length()<0.1) return;
+    if (dif.length() < 0.1) return;
     if (Math.abs(xDif) > Math.abs(zDif)) {
       if (xDif > 0) {
         addClick(player, ClickType.GO_FORWARD);
