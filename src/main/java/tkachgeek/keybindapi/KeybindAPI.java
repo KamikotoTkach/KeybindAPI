@@ -20,6 +20,8 @@ public class KeybindAPI {
   static JavaPlugin plugin;
   static int KEYBIND_LENGTH = 3;
   static boolean CANCEL_EVENT_WHILE_KEYBINDING = false;
+  static boolean DRAW_ON_KEYBINDING = true;
+  static boolean PLAY_SOUND_ON_KEYBINDING = true;
   static HashMap<List<ClickType>, List<KeybindConsumer>> binds = new HashMap<>();
   static Predicate<Player> checkPlayer = (x) -> true;
   static HashMap<Player, List<ClickType>> clicks = new HashMap<>();
@@ -64,10 +66,9 @@ public class KeybindAPI {
     
     time.put(player, System.currentTimeMillis());
     clicks.get(player).add(clickType);
-    
-    player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1);
-    
-    KeybindAPI.draw(player, clicks.get(player));
+
+    if(PLAY_SOUND_ON_KEYBINDING) player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1);
+    if(DRAW_ON_KEYBINDING) KeybindAPI.draw(player, clicks.get(player));
     
     if (clicks.get(player).size() >= KeybindAPI.KEYBIND_LENGTH) {
       KeybindAPI.tryExecute(new ArrayList<>(clicks.get(player)), player);
@@ -107,5 +108,13 @@ public class KeybindAPI {
     } else {
       player.sendActionBar(message);
     }
+  }
+
+  public static void setDrawOnKeybinding(boolean drawOnKeybinding) {
+    DRAW_ON_KEYBINDING = drawOnKeybinding;
+  }
+
+  public static void setPlaySoundOnKeybinding(boolean playSoundOnKeybinding) {
+    PLAY_SOUND_ON_KEYBINDING = playSoundOnKeybinding;
   }
 }
