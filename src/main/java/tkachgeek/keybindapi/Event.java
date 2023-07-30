@@ -5,6 +5,7 @@ import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
@@ -22,14 +23,14 @@ public class Event implements Listener {
       if (event.getHand() == EquipmentSlot.OFF_HAND) return;
 
       ClickType clickType = null;
-      if (event.getAction().isRightClick()) {
+      if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
          if (ItemTypes.isUsable((event.getItem()))) return;
          Block block = event.getClickedBlock();
          if (block != null && block.getType().isInteractable()) return;
          clickType = ClickType.MOUSE_RIGHT;
       }
 
-      if (event.getAction().isLeftClick()) {
+      if (event.getAction().equals(Action.LEFT_CLICK_BLOCK) || event.getAction().equals(Action.LEFT_CLICK_AIR)) {
          clickType = ClickType.MOUSE_LEFT;
       }
 
