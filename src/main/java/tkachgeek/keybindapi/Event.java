@@ -9,7 +9,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
 import org.bukkit.inventory.EquipmentSlot;
-import tkachgeek.tkachutils.items.ItemType;
+import tkachgeek.tkachutils.items.ItemTypes;
 
 import static tkachgeek.keybindapi.KeybindAPI.addClick;
 
@@ -23,7 +23,7 @@ public class Event implements Listener {
 
       ClickType clickType = null;
       if (event.getAction().isRightClick()) {
-         if (ItemType.isUsable(event.getItem())) return;
+         if (ItemTypes.isUsable((event.getItem()))) return;
          Block block = event.getClickedBlock();
          if (block != null && block.getType().isInteractable()) return;
          clickType = ClickType.MOUSE_RIGHT;
