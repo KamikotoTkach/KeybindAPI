@@ -66,6 +66,8 @@ public class MovementListener {
    private void handleMovement(Player player, Location prevLocation) {
       Location newLocation = player.getLocation();
 
+      if (newLocation.getWorld() != prevLocation.getWorld()) return;
+
       float angle = prevLocation.getYaw();
       Location dif = prevLocation.clone().subtract(newLocation);
 
@@ -91,44 +93,5 @@ public class MovementListener {
             addClick(player, ClickType.GO_LEFT);
          }
       }
-    
-    /*player.sendMessage(String.format("%s, %s", NumbersUtils.round(xDif, 2), NumbersUtils.round(zDif, 2)));
-    player.sendMessage(String.format("%s, %s", NumbersUtils.round(move.getX(), 2), NumbersUtils.round(move.getZ(), 2)));
-        player.sendMessage(String.format("%s, %s", NumbersUtils.round(move.getX(), 2), NumbersUtils.round(move.getZ(), 2)));
-
-    player.sendActionBar(Component.text(NumbersUtils.round(xDif, 1) + "WS ")
-                                  .append(get(0.5 + xDif, 1, 40, NamedTextColor.GREEN, NamedTextColor.GRAY))
-                                  .append(Component.text(" AD "))
-                                  .append(get(0.5 + zDif, 1, 40, NamedTextColor.GREEN, NamedTextColor.GRAY))
-                                  .append(Component.text(" " + NumbersUtils.round(zDif, 1))));
-    
-    char[][] chars = new char[20][20];
-    for (int y = 0; y < 20; y++) {
-      for (int x = 0; x < 20; x++) {
-        chars[y][x] = '_';
-      }
-    }
-    for (double a = -Math.PI; a < Math.PI; a += 0.1) {
-      chars[(int) (10 + Math.sin(a) * 9)][(int) (10 + Math.cos(a) * 9)] = '#';
-    }
-    
-    double a = Math.toRadians(angle);
-    chars[(int) (10 + Math.sin(a) * 9)][(int) (10 + Math.cos(a) * 9)] = 'T';
-    
-    a = Math.toRadians(Location.normalizeYaw(newLocation.getYaw())+90);
-    chars[(int) (10 + Math.sin(a) * 9)][(int) (10 + Math.cos(a) * 9)] = 'Z';
-    
-    a = Math.toRadians(rawAngle);
-    chars[(int) (10 + Math.sin(a) * 9)][(int) (10 + Math.cos(a) * 9)] = 'R';
-    
-    
-    
-    
-    for (int y = 0; y < 20; y++) {
-      player.sendMessage(new String(chars[y])
-                            .replace("T", "§4T§r")
-                            .replace("G", "§6G§r")
-                            .replace("Z", "§5Z§r")
-                            .replace("R", "§3R§r"));*/
    }
 }
