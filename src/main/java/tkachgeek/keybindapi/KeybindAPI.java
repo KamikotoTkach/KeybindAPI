@@ -7,6 +7,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import tkachgeek.tkachutils.messages.Message;
+import tkachgeek.tkachutils.messages.Messages;
 import tkachgeek.tkachutils.server.ServerUtils;
 
 import java.util.ArrayList;
@@ -104,7 +105,7 @@ public class KeybindAPI {
     }
     message = message.color(TextColor.color(202, 202, 202));
     if (ServerUtils.isVersionBefore1_16_5()) {
-      player.sendActionBar(Message.getInstance(message).toString());
+      player.sendActionBar(Message.from(message));
     } else {
       player.sendActionBar(message);
     }
