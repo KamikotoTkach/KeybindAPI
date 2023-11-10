@@ -16,17 +16,17 @@ import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 public class KeybindAPI {
-  static JavaPlugin plugin;
-  static int KEYBIND_LENGTH = 3;
-  static boolean CANCEL_EVENT_WHILE_KEYBINDING = false;
-  static boolean DRAW_ON_KEYBINDING = true;
-  static boolean PLAY_SOUND_ON_KEYBINDING = true;
-  static HashMap<List<ClickType>, List<KeybindConsumer>> binds = new HashMap<>();
-  static Predicate<Player> checkPlayer = (x) -> true;
-  static HashMap<Player, List<ClickType>> clicks = new HashMap<>();
-  static HashMap<Player, Long> time = new HashMap<>();
+  private static int KEYBIND_LENGTH = 3;
+  protected static boolean CANCEL_EVENT_WHILE_KEYBINDING = false;
+  private static boolean registered = false;
+  private static boolean DRAW_ON_KEYBINDING = true;
+  private static boolean PLAY_SOUND_ON_KEYBINDING = true;
+  private static HashMap<List<ClickType>, List<KeybindConsumer>> binds = new HashMap<>();
+  private static Predicate<Player> checkPlayer = (x) -> true;
+  private static HashMap<Player, List<ClickType>> clicks = new HashMap<>();
+  private static HashMap<Player, Long> time = new HashMap<>();
 
-  public KeybindAPI(KeybindConsumer consumer, ClickType... clicks) {
+  public static void bind(KeybindConsumer consumer, ClickType... clicks) {
     if (clicks.length != KEYBIND_LENGTH) {
       Logger.getGlobal().warning("Невозможно зарегистрировать сочетание клавиш" + Arrays.toString(clicks) + ", так как длина не соответствует необходимой");
       return;
@@ -75,22 +75,23 @@ public class KeybindAPI {
     }
   }
 
-  static public void load(JavaPlugin plugin, int keybindsLength, boolean cancelEventWhileKeybinding) {
+  public static void load(JavaPlugin plugin, int keybindsLength, boolean cancelEventWhileKeybinding) {
+    if (KeybindAPI.registered) return;
+    KeybindAPI.registered = true;
     Bukkit.getPluginManager().registerEvents(new Event(), plugin);
-    KeybindAPI.plugin = plugin;
     CANCEL_EVENT_WHILE_KEYBINDING = cancelEventWhileKeybinding;
     KEYBIND_LENGTH = keybindsLength;
   }
 
-  static public void applyPredicate(Predicate<Player> predicate) {
+  public static void applyPredicate(Predicate<Player> predicate) {
     checkPlayer = predicate;
   }
 
-  static public boolean testPlayer(Player player) {
+  public static boolean testPlayer(Player player) {
     return checkPlayer.test(player);
   }
 
-  static protected void tryExecute(List<ClickType> clicks, Player player) {
+  protected static void tryExecute(List<ClickType> clicks, Player player) {
     if (binds.containsKey(clicks)) {
       binds.get(clicks).stream().filter(x -> x.canRun(player)).forEach(consumer -> consumer.run(player));
     }
