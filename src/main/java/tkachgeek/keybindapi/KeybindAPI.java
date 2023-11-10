@@ -31,7 +31,7 @@ public class KeybindAPI {
       Logger.getGlobal().warning("Невозможно зарегистрировать сочетание клавиш" + Arrays.toString(clicks) + ", так как длина не соответствует необходимой");
       return;
     }
-    if (clicks[0].disableFirst) {
+    if (clicks[0].disabledFirst) {
       Logger.getGlobal().warning("Невозможно зарегистрировать сочетание клавиш " + Arrays.toString(clicks) + ", так как " + clicks[0] + " нельзя использовать первым");
       return;
     }
@@ -60,7 +60,7 @@ public class KeybindAPI {
     }
 
     if (clicks.get(player).size() == 0) {
-      if (clickType.disableFirst) return;
+      if (clickType.disabledFirst) return;
     }
 
     time.put(player, System.currentTimeMillis());
