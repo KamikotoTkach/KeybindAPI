@@ -1,52 +1,46 @@
 package tkachgeek.keybindapi;
 
 public enum ClickType {
-   MOUSE_LEFT("L", true, true),
-   MOUSE_RIGHT("R", true, true),
-   SPRINT_UP("N", true, true),
-   SPRINT_DOWN("C", true, true),
-   SHIFT_UP("N", true, true),
-   SHIFT_DOWN("S", true, true),
-   GO_FORWARD("MF", true, true),
-   GO_BACKWARD("MW", true, true),
-   GO_LEFT("ML", true, true),
-   GO_RIGHT("MR", true, true),
-   JUMP("J", true, true);
-   public String letter;
-   public boolean disabledFirst = false;
-   boolean disabled = false;
+  MOUSE_LEFT("L"),
+  MOUSE_RIGHT("R"),
+  SPRINT_UP("N"),
+  SPRINT_DOWN("C"),
+  SHIFT_UP("N"),
+  SHIFT_DOWN("S"),
+  GO_FORWARD("MF"),
+  GO_BACKWARD("MW"),
+  GO_LEFT("ML"),
+  GO_RIGHT("MR"),
+  JUMP("J");
+  private String letter;
+  private boolean enabledFirst = false;
+  private boolean enabled = false;
 
-   ClickType(String letter) {
-      this.letter = letter;
-   }
+  ClickType(String letter) {
+    this.letter = letter;
+  }
 
-   ClickType(String letter, boolean blockStartWith) {
-      this(letter);
-      this.disabledFirst = blockStartWith;
-   }
+  public String letter() {
+    return letter;
+  }
 
-   ClickType(String letter, boolean disabledFirst, boolean disabled) {
-      this(letter, disabledFirst);
-      this.disabled = disabled;
-   }
+  public void letter(String letter) {
+    this.letter = letter;
+  }
 
-   public void disable() {
-      disabled = true;
-   }
+  public boolean enabledFirst() {
+    return enabledFirst;
+  }
 
-   public void enable() {
-      disabled = false;
-   }
+  public void enabledFirst(boolean enabledFirst) {
+    this.enabledFirst = enabledFirst;
+  }
 
-   public void disableFirst() {
-      disabledFirst = true;
-   }
+  public boolean enabled() {
+    return enabled;
+  }
 
-   public void enableFirst() {
-      disabledFirst = false;
-   }
-
-   public void setLetter(String letter) {
-      this.letter = letter;
-   }
+  public void enabled(boolean enabled) {
+    this.enabled = enabled;
+  }
 }

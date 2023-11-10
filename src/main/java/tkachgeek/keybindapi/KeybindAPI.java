@@ -31,7 +31,7 @@ public class KeybindAPI {
       Logger.getGlobal().warning("Невозможно зарегистрировать сочетание клавиш" + Arrays.toString(clicks) + ", так как длина не соответствует необходимой");
       return;
     }
-    if (clicks[0].disabledFirst) {
+    if (clicks[0].enabledFirst()) {
       Logger.getGlobal().warning("Невозможно зарегистрировать сочетание клавиш " + Arrays.toString(clicks) + ", так как " + clicks[0] + " нельзя использовать первым");
       return;
     }
@@ -43,7 +43,7 @@ public class KeybindAPI {
   }
 
   public static void addClick(Player player, ClickType clickType) {
-    if (clickType.disabled) return;
+    if (clickType.enabled()) return;
     if (!KeybindAPI.testPlayer(player)) return;
 
     if (time.containsKey(player)) {
@@ -60,7 +60,7 @@ public class KeybindAPI {
     }
 
     if (clicks.get(player).size() == 0) {
-      if (clickType.disabledFirst) return;
+      if (clickType.enabledFirst()) return;
     }
 
     time.put(player, System.currentTimeMillis());
@@ -99,7 +99,7 @@ public class KeybindAPI {
   protected static void draw(Player player, List<ClickType> clicks) {
     Component message = Component.empty();
     for (int i = 0; i < KEYBIND_LENGTH; i++) {
-      message = message.append(Component.text("[" + (clicks.size() > i ? clicks.get(i).letter : "_") + "]"));
+      message = message.append(Component.text("[" + (clicks.size() > i ? clicks.get(i).letter() : "_") + "]"));
     }
     message = message.color(TextColor.color(202, 202, 202));
 
